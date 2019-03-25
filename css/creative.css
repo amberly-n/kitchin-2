@@ -35,6 +35,7 @@
    overflow:hidden;
    white-space:nowrap;
    text-overflow: ellipsis;
+   font-family: 'Open Sans';
  }
  div.loc {
    padding: 5px;
@@ -43,6 +44,7 @@
    overflow:hidden;
    white-space:nowrap;
    text-overflow: ellipsis;
+   font-family: 'Open Sans';
  }
  .create {
    width: 60%;
@@ -74,7 +76,7 @@
   width: 100%;
 }
 body {
-  font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 hr {
   border-color: #F05F40;
@@ -118,7 +120,7 @@ p {
   color: rgba(255, 255, 255, 0.7);
 }
 section {
-  padding: 100px 0;
+  padding: 100px 0 0 0;
 }
 aside {
   padding: 50px 0;
@@ -496,7 +498,7 @@ body {
 }
 
 #search_button {
-  background-color: #F05F40; /* Green */
+  background-color: #F05F40; 
   border: none;
   color: white;
   text-align: center;
@@ -509,6 +511,7 @@ body {
   font-size: 11px;
   float: right;
   border-radius: 5px;
+  font-family: 'Open Sans';
 }
 .login_button {
   background-color: #F05F40;
@@ -519,6 +522,7 @@ body {
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
+  font-family: 'Open Sans';
 }
 
 .login_button:hover {
