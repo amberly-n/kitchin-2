@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'"> -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Log In</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+    rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href="../vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <link href="../css/creative.css" rel="stylesheet">
+
+  <!-- Theme CSS -->
+  <link href="../css/creative.css" rel="stylesheet">
+  <link href="../css/creative.min.css" rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCYcNvGm5fdmB0RPnj9PmRr-PphS6YtIYc",
+      authDomain: "kitchin-17da5.firebaseapp.com",
+      databaseURL: "https://kitchin-17da5.firebaseio.com",
+      storageBucket: "kitchin-17da5.appspot.com",
+      messagingSenderId: "533380983801"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script type="text/javascript">
+
+    /**
+     * Handles the sign in button press.
+     */
+    function toggleSignIn() {
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        // [END signout]
+      } else {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password.');
+          return;
+        }
+        // Sign in with email and pass.
+        // [START authwithemail]
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(function (user) {
+            window.location.href = "index_signedin.html";
+          })
+          .catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // [START_EXCLUDE]
+            if (errorCode === 'auth/wrong-password') {
+              alert('Wrong password.');
+            } else {
+              alert(errorMessage);
+            }
+            console.log(error);
+            // [END_EXCLUDE]
+          });
+
+        // [END authwithemail]
+      }
+    }
+
+    /**
+     * Sends an email verification to the user.
+     */
+    function sendEmailVerification() {
+      // [START sendemailverification]
+      firebase.auth().currentUser.sendEmailVerification().then(function () {
+        // Email Verification sent!
+        // [START_EXCLUDE]
+        alert('Email Verification Sent!');
+        // [END_EXCLUDE]
+      });
+      // [END sendemailverification]
+    }
+
+    function sendPasswordReset() {
+      var email = prompt("Please enter your e-mail address");
+
+      if (email != null) {
+        firebase.auth().sendPasswordResetEmail(email).then(function () {
+          alert('Password Reset Email Sent To ' + email + '!');
+        }).catch(function (error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode == 'auth/invalid-email') {
+            alert(errorMessage);
+          } else if (errorCode == 'auth/user-not-found') {
+            alert(errorMessage);
+          }
+          console.log(error);
+          // [END_EXCLUDE]
+        });
+      }
+
+      // [START sendpasswordemail]
+
+      // [END sendpasswordemail];
+    }
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+    function initApp() {
+      document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn);
+    }
+
+    window.onload = function () {
+      initApp();
+    };
+  </script>
+
+</head>
+
+<body id="page-top">
+
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand page-scroll" href="./index.html">K</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a class="page-scroll" href="./index.html">Home</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="./help.html">FAQ</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+  <!-- Page Header -->
+  <div class="row" style="position: relative; top: 200px;">
+    <div class="col-lg-12">
+      <div class="child">
+        <center>
+          <table>
+            <tr>
+              <td>E-mail:
+              </td>
+              <td><input type="text" id="email" style="border: 1px solid #888;">
+              </td>
+            </tr>
+            <tr>
+              <td><br /></td>
+            </tr>
+            <tr>
+              <td style="padding-right: 35px;">Password:
+              </td>
+              <td><input type="password" id="password" style="border: 1px solid #888;">
+              </td>
+            </tr>
+          </table>
+          <br /><br />
+          <div class="login_button" id="quickstart-sign-in">SIGN IN</div>
+          <br>
+          <br>
+          <table>
+            <tr>
+              <td style="padding-right: 35px;"><a href="./signup.html"><div class="login_button">SIGN UP</div></a>
+              </td>
+              <td><a href="./index.html"><div class="login_button">SKIP</div></a>
+              </td>
+            </tr>
+          </table>
+        </center>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+
+
+
+
+</body>
+
+
+
+
+
+
+
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<!-- Theme JavaScript -->
+<script src="js/creative.min.js"></script>
+<script type="text/javascript">
+  function search() {
+    window.location.href = './search.html';
+  }
+</script>
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-93260557-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+</html>
