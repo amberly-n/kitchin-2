@@ -135,7 +135,7 @@
     function signOut() {
       firebase.auth().signOut().then(function () {
         console.log('Signed Out');
-        window.location.href = "./index.html";
+        window.location.href = "index.html";
       }, function (error) {
         console.error('Sign Out Error', error);
       });
@@ -154,7 +154,7 @@
         if (user) {
           // User is signed in.
         } else {
-          window.location.href = "./index.html";
+          window.location.href = "index.html";
         }
       });
       // [END authstatelistener]
@@ -254,7 +254,7 @@
         .attr("transform", "translate(" + 200 + "," + 100 + ")");
 
       /* call on data.csv for data then display */
-      d3.csv("data.csv").then(function (data) {
+      d3.csv("../data.csv").then(function (data) {
         console.log(data);
         data.forEach(function (d) {
           d.year = d.year;
